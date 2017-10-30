@@ -1,15 +1,6 @@
-# AndroidUIView v1.1.0
+# AndroidUIView
 
-It's a very simple custom views library according UIButton in iOS, all of the views can be automatically set a pressed effect to a button with a simple background image without writing a selector.xml
-
-Hope you will like it :)
-
-`UIButton` A view extends Button, like as UIButton in iOS.
-
-`UIImageView` A view extends ImageView, like as UIButton in iOS.
-
-`UIRippleButton` A view fork from [traex/RippleEffect](https://github.com/traex/RippleEffect), be added and contributed by [whilu](https://github.com/whilu)
-
+It's a simple custom views library according UIButton in iOS, all of the views can be automatically set a pressed effect without writing a selector.xml
 
 ## Screenshots
 
@@ -17,41 +8,13 @@ Hope you will like it :)
 <img src="/screenshots/s2.png" alt="screenshot" title="screenshot" width="270" height="486" />
 <img src="/screenshots/s3.png" alt="screenshot" title="screenshot" width="270" height="486" />
 
-
 ## Usage
-### Step 1
-#### Gradle & Maven
+
 ```groovy
 dependencies {
-    compile 'me.drakeet.uiview:androiduiview:1.1.5'
+    compile 'me.drakeet.uiview:androiduiview:1.1.6'
 }
 ```
-
-```xml
-<dependency>
-    <groupId>me.drakeet.uiview</groupId>
-    <artifactId>androiduiview</artifactId>
-    <version>1.1.5</version>
-</dependency>
-```
-
-
-#### Or
-
-Import the library, then add it to your `/settings.gradle` and `/app/build.gradle`, if you don't know how to do it, you can read my blog for help.
-
-[Android Studio 简介及导入 jar 包和第三方开源库方法](http://drakeet.me/android-studio)
-
-### Step 2
-
-It's very easy, just like this:
-
-before using, add the namespace code to your xml:
-```xml
-xmlns:drakeet="http://schemas.android.com/apk/res-auto"
-```
-
-all right, 
 
 ```xml
 <me.drakeet.library.UIButton
@@ -86,22 +49,8 @@ You can change several attributes in the XML file:
 * `drakeet:shape_type` [enum (rectangle, round) def:rectangle] --> Rectangle or round of cover or background view shape
 * `drakeet:radius` [dimension def:2dp] --> Add a radius to the cover
 
-## THANKS
-
-
-## BUG
-If set a selector.xml to background, it may perform perfectly...
-
 ## DEMO
 [apk](/sample/sample-release.apk)
-
-## About me
-
-I am a student in China, I love reading pure literature, love Japanese culture and Hongkong music. At the same time, I am also obsessed with writing code. If you have any questions or want to make friends with me, you can write to me: drakeet.me@gmail.com
-
-In addition, my blog: http://drakeet.me
-
-If you like my open source projects, you can follow me: https://github.com/drakeet
 
 License
 ============

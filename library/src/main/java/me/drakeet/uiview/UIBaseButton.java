@@ -1,5 +1,6 @@
 package me.drakeet.uiview;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -50,16 +51,13 @@ public class UIBaseButton extends Button {
     }
 
 
+    @SuppressLint("CustomViewStyleable")
     protected void init(final Context context, final AttributeSet attrs) {
         if (isInEditMode()) return;
-        final TypedArray typedArray = context.obtainStyledAttributes(attrs,
-                R.styleable.UIButton);
-        mShapeType = typedArray.getInt(R.styleable.UIButton_shape_type,
-                SHAPE_TYPE_RECTANGLE);
-        mRadius = typedArray.getDimensionPixelSize(R.styleable.UIButton_radius,
-                getResources().getDimensionPixelSize(R.dimen.ui_radius));
-        int unpressedColor = typedArray.getColor(
-                R.styleable.UIButton_color_unpressed, Color.TRANSPARENT);
+        final TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.UIButton);
+        mShapeType = typedArray.getInt(R.styleable.UIButton_shape_type, SHAPE_TYPE_RECTANGLE);
+        mRadius = typedArray.getDimensionPixelSize(R.styleable.UIButton_radius, getResources().getDimensionPixelSize(R.dimen.ui_radius));
+        int unpressedColor = typedArray.getColor(R.styleable.UIButton_color_unpressed, Color.TRANSPARENT);
         typedArray.recycle();
 
         mBackgroundPaint = new Paint();
@@ -75,23 +73,27 @@ public class UIBaseButton extends Button {
     }
 
 
-    @Override protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
         mWidth = w;
         mHeight = h;
     }
 
 
-    @Override protected void onDraw(Canvas canvas) {
+    RectF rectF = new RectF();
+
+
+    @Override
+    protected void onDraw(Canvas canvas) {
         if (mBackgroundPaint == null) {
             super.onDraw(canvas);
             return;
         }
         if (mShapeType == 0) {
             canvas.drawCircle(mWidth / 2, mHeight / 2, mWidth / 2,
-                    mBackgroundPaint);
+                mBackgroundPaint);
         } else {
-            RectF rectF = new RectF();
             rectF.set(0, 0, mWidth, mHeight);
             canvas.drawRoundRect(rectF, mRadius, mRadius, mBackgroundPaint);
         }

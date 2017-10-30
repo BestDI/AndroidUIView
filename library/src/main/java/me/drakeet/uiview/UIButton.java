@@ -23,6 +23,7 @@
  */
 package me.drakeet.uiview;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -67,14 +68,12 @@ public class UIButton extends UIBaseButton {
     }
 
 
-    @Override protected void init(Context context, AttributeSet attrs) {
+    @Override
+    protected void init(Context context, AttributeSet attrs) {
         super.init(context, attrs);
-        final TypedArray typedArray = context.obtainStyledAttributes(attrs,
-                R.styleable.UIButton);
-        COVER_ALPHA = typedArray.getInteger(R.styleable.UIButton_alpha_pressed,
-                COVER_ALPHA);
-        mPressedColor = typedArray.getColor(R.styleable.UIButton_color_pressed,
-                getResources().getColor(R.color.color_pressed));
+        final TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.UIButton);
+        COVER_ALPHA = typedArray.getInteger(R.styleable.UIButton_alpha_pressed, COVER_ALPHA);
+        mPressedColor = typedArray.getColor(R.styleable.UIButton_color_pressed, getResources().getColor(R.color.color_pressed));
         typedArray.recycle();
 
         mPressedPaint = new Paint();
@@ -85,20 +84,25 @@ public class UIButton extends UIBaseButton {
     }
 
 
-    @Override protected void onDraw(Canvas canvas) {
+    RectF rectF = new RectF();
+
+
+    @Override
+    protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         if (mShapeType == 0) {
             canvas.drawCircle(mWidth / 2, mHeight / 2, mWidth / 2.1038f,
-                    mPressedPaint);
+                mPressedPaint);
         } else {
-            RectF rectF = new RectF();
             rectF.set(0, 0, mWidth, mHeight);
             canvas.drawRoundRect(rectF, mRadius, mRadius, mPressedPaint);
         }
     }
 
 
-    @Override public boolean onTouchEvent(MotionEvent event) {
+    @Override
+    @SuppressLint("ClickableViewAccessibility")
+    public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 mPressedPaint.setAlpha(COVER_ALPHA);

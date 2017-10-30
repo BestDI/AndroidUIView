@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="uibutton" parent="android:Widget.Button">
+    <style name="UIButton" parent="android:Widget.Button">
         <item name="android:background">@color/transparent</item>
         <item name="android:focusable">true</item>
         <item name="android:clickable">true</item>
@@ -9,4 +9,3 @@
         <item name="android:gravity">center</item>
     </style>
 </resources>
-<!--<item name="android:textColor">@android:color/primary_text_light</item>-->

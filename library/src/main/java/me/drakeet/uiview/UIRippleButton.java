@@ -1,5 +1,6 @@
 package me.drakeet.uiview;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -31,9 +32,12 @@ public class UIRippleButton extends UIBaseButton {
     private Path mPath;
     private Timer mTimer;
     private TimerTask mTask;
+
+    @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler() {
 
-        @Override public void handleMessage(Message msg) {
+        @Override
+        public void handleMessage(Message msg) {
             super.handleMessage(msg);
             if (msg.what == MSG_DRAW_COMPLETE) {
                 invalidate();
@@ -42,7 +46,6 @@ public class UIRippleButton extends UIBaseButton {
     };
 
     private int mRippleAlpha;
-    //private final static int HALF_ALPHA = 127;
     private final static int RIPPLR_ALPHA = 47;
     private final static int MSG_DRAW_COMPLETE = 101;
 
@@ -64,23 +67,18 @@ public class UIRippleButton extends UIBaseButton {
     }
 
 
+    @SuppressLint("CustomViewStyleable")
     protected void init(final Context context, final AttributeSet attrs) {
         super.init(context, attrs);
         if (isInEditMode()) {
             return;
         }
-        final TypedArray typedArray = context.obtainStyledAttributes(attrs,
-                R.styleable.UIButton);
-        mRippleColor = typedArray.getColor(R.styleable.UIButton_ripple_color,
-                getResources().getColor(R.color.ripple_color));
-        mRippleAlpha = typedArray.getInteger(R.styleable.UIButton_ripple_alpha,
-                RIPPLR_ALPHA);
-        mRippleDuration = typedArray.getInteger(
-                R.styleable.UIButton_ripple_duration, 1000);
+        final TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.UIButton);
+        mRippleColor = typedArray.getColor(R.styleable.UIButton_ripple_color, getResources().getColor(R.color.ripple_color));
+        mRippleAlpha = typedArray.getInteger(R.styleable.UIButton_ripple_alpha, RIPPLR_ALPHA);
+        mRippleDuration = typedArray.getInteger(R.styleable.UIButton_ripple_duration, 1000);
         mShapeType = typedArray.getInt(R.styleable.UIButton_shape_type, 1);
-        mRoundRadius = typedArray.getDimensionPixelSize(
-                R.styleable.UIButton_radius,
-                getResources().getDimensionPixelSize(R.dimen.ui_radius));
+        mRoundRadius = typedArray.getDimensionPixelSize(R.styleable.UIButton_radius, getResources().getDimensionPixelSize(R.dimen.ui_radius));
         typedArray.recycle();
         mRipplePaint = new Paint();
         mRipplePaint.setColor(mRippleColor);
@@ -93,7 +91,8 @@ public class UIRippleButton extends UIBaseButton {
     }
 
 
-    @Override protected void onDraw(Canvas canvas) {
+    @Override
+    protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         if (mRipplePaint == null) {
             return;
@@ -102,7 +101,9 @@ public class UIRippleButton extends UIBaseButton {
     }
 
 
-    @Override public boolean onTouchEvent(MotionEvent event) {
+    @Override
+    @SuppressLint("ClickableViewAccessibility")
+    public boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             pointX = event.getX();
             pointY = event.getY();
@@ -128,16 +129,15 @@ public class UIRippleButton extends UIBaseButton {
             mRippleRadius += drawSpeed;
 
             canvas.save();
-            //            canvas.translate(0, 0);//保持原点
             mPath.reset();
             canvas.clipPath(mPath);
             if (mShapeType == 0) {
                 mPath.addCircle(rbX / 2, rbY / 2, mWidth / 2,
-                        Path.Direction.CCW);
+                    Path.Direction.CCW);
             } else {
                 mRectF.set(0, 0, mWidth, mHeight);
                 mPath.addRoundRect(mRectF, mRoundRadius, mRoundRadius,
-                        Path.Direction.CCW);
+                    Path.Direction.CCW);
             }
             canvas.clipPath(mPath, Region.Op.REPLACE);
             canvas.drawCircle(pointX, pointY, mRippleRadius, mRipplePaint);
